@@ -12,9 +12,10 @@
 body {
   font-family: var(--main-font);
   color: black;
-  display: flex;
   justify-content: center;
   padding-top: 50px;
+  display: flex;
+  align-items: center;
 }
 
 .chat-container {
@@ -24,7 +25,7 @@ body {
 }
 
 #chat-box {
-  height: 400px;
+  height: 500px;
   overflow-y: auto;
   border: 0.25px solid transparent;
   border-radius: 3px;
@@ -34,18 +35,28 @@ body {
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .message {
-  margin: 10px 0;
+  padding: 10px 14px;
+  border-radius: 3px;
+  max-width: 75%;
+  word-wrap: break-word;
 }
 
 .user {
-  color: #60a5fa;
+  color: white;
+  background: #60a5fa;
+  align-self: flex-start;
 }
 
 .bot {
-  color: #34d399;
+  color: black;
+  align-self: flex-start;
+  width: 100%;
 }
 
 .input-area {
@@ -68,4 +79,36 @@ input {
 button {
   padding: 10px 15px;
   cursor: pointer;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.content h1,
+.content h2,
+.content h3 {
+    margin: 6px 0;
+}
+
+.content p {
+    margin: 4px 0;
+}
+
+.content pre {
+    background: #111827;
+    padding: 10px;
+    border-radius: 6px;
+    overflow-x: auto;
+}
+
+.content code {
+    font-family: monospace;
+}
+
+.content ul,
+.content ol {
+    margin-left: 20px;
 }

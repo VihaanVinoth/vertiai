@@ -2,38 +2,65 @@ const chatBox = document.getElementById("chat-box");
 const input = document.getElementById("user-input");
 const sendBtn = document.getElementById("deliver-btn");
 
+function toLatex(text) {
+  return text
+    // fractions
+    .replace(/(\w+)\/(\w+)/g, "$$\\frac{$1}{$2}$$")
+
+    // powers: x^2 → x^{2}
+    .replace(/(\w)\^(\w+)/g, "$1^{$2}")
+
+    // sqrt
+    .replace(/sqrt\((.*?)\)/g, "$$\\sqrt{$1}$$");
+}
+
 function addMessage(text, sender) {
   const div = document.createElement("div");
   div.classList.add("message", sender);
 
-  div.innerHTML = `<strong>${sender}:</strong> ${text}`;
+  const safeText =
+    typeof text === "string"
+      ? text
+      : JSON.stringify(text);
+
+  div.innerHTML = `
+    <div class="content">${marked.parse(safeText)}</div>
+  `;
 
   chatBox.appendChild(div);
   chatBox.scrollTop = chatBox.scrollHeight;
+
+  renderMathInElement(div, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "$", right: "$", display: false },
+    ],
+  });
 }
 
 async function sendMessage() {
-  const message = input.value;
+  const raw = input.value;
+  if (!raw) return;
+  const message = toLatex(raw);
 
-  if (!message) return;
-
-  addMessage(message, "user");
+  addMessage(raw, "user");
 
   input.value = "";
 
   const response = await fetch("http://localhost:3001/chat", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      message
-    })
+    body: JSON.stringify({ message }),
   });
 
   const data = await response.json();
 
-  addMessage(data.reply, "bot");
+  const replyText =
+    typeof data.reply === "string" ? data.reply : JSON.stringify(data.reply);
+
+  addMessage(replyText, "bot");
 }
 
 sendBtn.addEventListener("click", sendMessage);
