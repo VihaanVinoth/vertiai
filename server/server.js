@@ -11,7 +11,8 @@ app.use(cors());
 app.use(express.json());
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.GROQ_API_KEY,
+  baseURL: "https://api.groq.com/openai/v1",
 });
 
 app.post("/chat", async (req, res) => {
@@ -19,31 +20,22 @@ app.post("/chat", async (req, res) => {
     const userMessage = req.body.message;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4.1-mini",
+      model: "llama-3.3-70b-versatile",
       messages: [
         {
-          role: "system",
-          content: "A helpful assistant to assist in Australian VCE-related, as well as Australian Homework help for children aged 3-18, in accordance with Curriculum standards."
-        },
-        {
-          role: "user",
-          content: userMessage
-        }
-      ]
-    });
+            role: "system",
+            content: `
+            You are a math tutor AI specialising in Australian mathematics from Middle School to VCE-related concerns (Year 5-12).
 
-    const reply = completion.choices[0].message.content;
+            RULES:
+            - ALWAYS use LaTeX for math.
+            - Inline math must use $...$
+            - Display equations must use $$...$$
+            - NEVER write math in plain English.
+            - Always convert expressions into proper LaTeX.
 
-    res.json({ reply });
+            EXAMPLES:
 
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Something went wrong"
-    });
-  }
-});
-
-app.listen(3001, () => {
-  console.log("Server running on port 3001");
-});
+            User: solve x^2 = 4
+            Assistant:
+            $
