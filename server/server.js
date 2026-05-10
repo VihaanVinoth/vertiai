@@ -38,4 +38,34 @@ app.post("/chat", async (req, res) => {
 
             User: solve x^2 = 4
             Assistant:
-            $
+            $$
+            x = \pm 2
+            $$
+
+            User: derivative of x^2
+            Assistant:
+            $$
+            \frac{d}{dx} x^2 = 2x
+            $$
+            `
+        },
+        {
+          role: "user",
+          content: userMessage
+        }
+      ]
+    });
+
+    res.json({ reply: completion.choices[0].message.content });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "Something went wrong"
+    });
+  }
+});
+
+app.listen(3001, () => {
+  console.log("Server running on port 3001");
+});
