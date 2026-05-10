@@ -21,7 +21,7 @@ async function sendMessage() {
 
   input.value = "";
 
-  const response = await fetch("http://localhost:5500/chat", {
+  const response = await fetch("http://localhost:3001/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
