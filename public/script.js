@@ -6,8 +6,6 @@ const clearBtn = document.getElementById("clear-btn");
 const supabaseUrl = "https://qnahvrzqewdgewdjqbef.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuYWh2cnpxZXdkZ2V3ZGpxYmVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0OTU3MzgsImV4cCI6MjA5NDA3MTczOH0.NJ6jqu2j1dir65HEPC6xVsgY5L-_PhtuPn9i2kAX-aM";
 
-const loginBtn = document.getElementById("google-login");
-
 const supabase = window.supabase.createClient(
   supabaseUrl,
   supabaseKey
@@ -25,7 +23,6 @@ if (loginBtn) {
 
 async function checkUser() {
   const { data: { user } } = await supabase.auth.getUser();
-  console.log(user);
 }
 
 checkUser();
