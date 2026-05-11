@@ -2,35 +2,6 @@ const chatBox = document.getElementById("chat-box");
 const input = document.getElementById("user-input");
 const sendBtn = document.getElementById("deliver-btn");
 const clearBtn = document.getElementById("clear-btn");
-const loginBtn = document.getElementById("google-login");
-
-const supabaseUrl = "https://qnahvrzqewdgewdjqbef.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuYWh2cnpxZXdkZ2V3ZGpxYmVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0OTU3MzgsImV4cCI6MjA5NDA3MTczOH0.NJ6jqu2j1dir65HEPC6xVsgY5L-_PhtuPn9i2kAX-aM";
-
-window.supabaseClient =
-  window.supabaseClient ||
-  window.supabase.createClient(supabaseUrl, supabaseKey);
-
-const supabase = window.supabaseClient;
-
-if (loginBtn) {
-  loginBtn.addEventListener("click", async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "google"
-    });
-  });
-}
-
-async function checkUser() {
-  const { data: { user } } =
-    await supabase.auth.getUser();
-
-  if (user) {
-    addMessage(`Logged in as ${user.email}`, "bot");
-  }
-}
-
-checkUser();
 
 function toLatex(text) {
   return text
@@ -77,13 +48,8 @@ async function sendMessage() {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ message: raw }),
+    body: JSON.stringify({ message }),
   });
-
-  if (!response.ok) {
-    addMessage("Server error ❌", "bot");
-    return;
-  }
 
   const data = await response.json();
 
