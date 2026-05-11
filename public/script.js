@@ -2,19 +2,16 @@ const chatBox = document.getElementById("chat-box");
 const input = document.getElementById("user-input");
 const sendBtn = document.getElementById("deliver-btn");
 const clearBtn = document.getElementById("clear-btn");
+const loginBtn = document.getElementById("google-login");
 
 const supabaseUrl = "https://qnahvrzqewdgewdjqbef.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuYWh2cnpxZXdkZ2V3ZGpxYmVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0OTU3MzgsImV4cCI6MjA5NDA3MTczOH0.NJ6jqu2j1dir65HEPC6xVsgY5L-_PhtuPn9i2kAX-aM";
 
-window.supabaseClient = window.supabaseClient ||
-  window.supabase.createClient(
-    supabaseUrl,
-    supabaseKey
-  );
+window.supabaseClient =
+  window.supabaseClient ||
+  window.supabase.createClient(supabaseUrl, supabaseKey);
 
 const supabase = window.supabaseClient;
-
-const loginBtn = document.getElementById("google-login");
 
 if (loginBtn) {
   loginBtn.addEventListener("click", async () => {
@@ -25,12 +22,17 @@ if (loginBtn) {
 }
 
 async function checkUser() {
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error) {
+    console.error("Auth error:", error);
+    return;
+  }
+
+  console.log("User:", data.user);
 }
 
 checkUser();
-
-console.log(user);
 
 function toLatex(text) {
   return text
@@ -66,10 +68,8 @@ function addMessage(text, sender) {
 async function sendMessage() {
   const raw = input.value;
   if (!raw) return;
-  const message = raw;
 
   addMessage(raw, "user");
-
   input.value = "";
 
   const response = await fetch("http://localhost:3001/chat", {
