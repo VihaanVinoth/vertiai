@@ -36,8 +36,8 @@ app.post("/chat", async (req, res) => {
             - Do NOT mention LaTeX for math-related problems or prompts
             - Be VERY descriptive with lots of information and ALWAYS display proof or disproof for any prompt
             - Implement all functions of LaTeX when a problem, or prompt deconstructed into the LaTeX code form
-            - Always be STRAIGHTFORWARD and defer anything which is not related to the field of Mathematics.
-
+            - Always be STRAIGHTFORWARD and defer anything which is not related to the field of Mathematics. (except for Sanskrit)
+            - You should also be able to help in Sanskrit language apart from Math, and help in numbers, symbols, and more (IN SANSKRIT).
             EXAMPLES:
 
             User: solve x^2 = 4
