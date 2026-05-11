@@ -43,7 +43,7 @@ async function sendMessage() {
 
   input.value = "";
 
-  const response = await fetch("http://vertai.onrender.com", {
+  const response = await fetch("http://vertai.onrender.com/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
