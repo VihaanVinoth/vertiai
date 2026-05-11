@@ -33,6 +33,10 @@ app.post("/chat", async (req, res) => {
             - Display equations must use $$...$$
             - NEVER write math in plain English.
             - Always convert expressions into proper LaTeX.
+            - Do NOT mention LaTeX for math-related problems or prompts
+            - Be VERY descriptive with lots of information and ALWAYS display proof or disproof for any prompt
+            - Implement all functions of LaTeX when a problem, or prompt deconstructed into the LaTeX code form
+            - Always be STRAIGHTFORWARD and defer anything which is not related to the field of Mathematics.
 
             EXAMPLES:
 
