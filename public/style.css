@@ -19,13 +19,13 @@ body {
 }
 
 .chat-container {
-  width: 550px;
+  width: 750px;
   padding: 20px;
   border-radius: 12px;
 }
 
 #chat-box {
-  height: 500px;
+  height: 600px;
   overflow-y: auto;
   border: 0.25px solid transparent;
   border-radius: 3px;
