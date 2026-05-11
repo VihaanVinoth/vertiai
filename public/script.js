@@ -6,7 +6,7 @@ const clearBtn = document.getElementById("clear-btn");
 function toLatex(text) {
   return text
     .replace(/(\w+)\/(\w+)/g, "$$\\frac{$1}{$2}$$")
-    .replace(/(\w)\^(\w+)/g, "$1^{$2}")
+    .replace(/(\w)\^(\w+|\{.*?\})/g, "$1^{$2}")
     .replace(/sqrt\((.*?)\)/g, "$$\\sqrt{$1}$$");
 }
 
