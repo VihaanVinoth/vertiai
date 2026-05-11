@@ -1,16 +1,12 @@
 const chatBox = document.getElementById("chat-box");
 const input = document.getElementById("user-input");
 const sendBtn = document.getElementById("deliver-btn");
+const clearBtn = document.getElementById("clear-btn");
 
 function toLatex(text) {
   return text
-    // fractions
     .replace(/(\w+)\/(\w+)/g, "$$\\frac{$1}{$2}$$")
-
-    // powers: x^2 → x^{2}
     .replace(/(\w)\^(\w+)/g, "$1^{$2}")
-
-    // sqrt
     .replace(/sqrt\((.*?)\)/g, "$$\\sqrt{$1}$$");
 }
 
@@ -41,7 +37,7 @@ function addMessage(text, sender) {
 async function sendMessage() {
   const raw = input.value;
   if (!raw) return;
-  const message = toLatex(raw);
+  const message = raw;
 
   addMessage(raw, "user");
 
@@ -64,3 +60,12 @@ async function sendMessage() {
 }
 
 sendBtn.addEventListener("click", sendMessage);
+
+function clearChat() {
+  if (confirm("Clear chat?")) {
+    chatBox.innerHTML = "";
+    localStorage.removeItem("chat-history");
+  }
+}
+
+clearBtn.addEventListener("click", clearChat);
