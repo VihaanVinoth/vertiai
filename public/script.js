@@ -26,18 +26,20 @@ function addMessage(text, sender) {
   chatBox.appendChild(div);
   chatBox.scrollTop = chatBox.scrollHeight;
 
-  renderMathInElement(div, {
-    delimiters: [
-      { left: "$$", right: "$$", display: true },
-      { left: "$", right: "$", display: false },
-    ],
-  });
+  setTimeout(() => {
+    renderMathInElement(div, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+      ],
+    });
+  }, 0);
 }
 
 async function sendMessage() {
   const raw = input.value;
   if (!raw) return;
-  const message = raw;
+  const message = toLatex(raw);
 
   addMessage(raw, "user");
 
