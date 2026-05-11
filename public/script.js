@@ -22,14 +22,12 @@ if (loginBtn) {
 }
 
 async function checkUser() {
-  const { data, error } = await supabase.auth.getUser();
+  const { data: { user } } =
+    await supabase.auth.getUser();
 
-  if (error) {
-    console.error("Auth error:", error);
-    return;
+  if (user) {
+    addMessage(`Logged in as ${user.email}`, "bot");
   }
-
-  console.log("User:", data.user);
 }
 
 checkUser();
@@ -68,8 +66,10 @@ function addMessage(text, sender) {
 async function sendMessage() {
   const raw = input.value;
   if (!raw) return;
+  const message = raw;
 
   addMessage(raw, "user");
+
   input.value = "";
 
   const response = await fetch("http://localhost:3001/chat", {
@@ -77,8 +77,13 @@ async function sendMessage() {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ message }),
+    body: JSON.stringify({ message: raw }),
   });
+
+  if (!response.ok) {
+    addMessage("Server error ❌", "bot");
+    return;
+  }
 
   const data = await response.json();
 
