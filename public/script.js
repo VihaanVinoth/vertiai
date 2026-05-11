@@ -6,10 +6,13 @@ const clearBtn = document.getElementById("clear-btn");
 const supabaseUrl = "https://qnahvrzqewdgewdjqbef.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuYWh2cnpxZXdkZ2V3ZGpxYmVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0OTU3MzgsImV4cCI6MjA5NDA3MTczOH0.NJ6jqu2j1dir65HEPC6xVsgY5L-_PhtuPn9i2kAX-aM";
 
-const supabase = window.supabase.createClient(
-  supabaseUrl,
-  supabaseKey
-);
+window.supabaseClient = window.supabaseClient ||
+  window.supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+  );
+
+const supabase = window.supabaseClient;
 
 const loginBtn = document.getElementById("google-login");
 
